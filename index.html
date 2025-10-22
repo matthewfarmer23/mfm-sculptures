@@ -217,26 +217,36 @@
             padding: 100px 40px;
         }
 
-        .process-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
+        .process-slider-container {
+            position: relative;
             max-width: 1400px;
             margin: 0 auto;
+            padding: 0 60px;
+        }
+
+        .process-slider {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 30px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            scroll-behavior: smooth;
+        }
+
+        .process-slider::-webkit-scrollbar {
+            display: none;
         }
 
         .process-step {
+            flex: 0 0 calc(50% - 15px);
+            scroll-snap-align: start;
             text-align: center;
-            transition: transform 0.3s ease;
-        }
-
-        .process-step:hover {
-            transform: translateY(-5px);
         }
 
         .process-image {
             width: 100%;
-            height: 250px;
+            height: 350px;
             object-fit: cover;
             border-radius: 8px;
             margin-bottom: 20px;
@@ -246,6 +256,40 @@
 
         .process-step:hover .process-image {
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+        }
+
+        .slider-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .slider-nav:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .slider-nav.prev {
+            left: 0;
+        }
+
+        .slider-nav.next {
+            right: 0;
+        }
+
+        .slider-nav .arrow {
+            color: #000;
+            font-size: 30px;
+            line-height: 1;
         }
 
         .process-label {
@@ -802,36 +846,46 @@
         <section class="process-section">
             <h2 class="section-title fade-in">My Process</h2>
             
-            <div class="process-grid">
-                <div class="process-step fade-in stagger-1">
-                    <img src="images/eagle-process-1.JPG" alt="Making the skeleton" class="process-image">
-                    <p class="process-label">Making the skeleton</p>
-                </div>
+            <div class="process-slider-container">
+                <button class="slider-nav prev">
+                    <span class="arrow">&#8249;</span>
+                </button>
                 
-                <div class="process-step fade-in stagger-2">
-                    <img src="images/eagle-process-2.JPG" alt="Adding the feathers" class="process-image">
-                    <p class="process-label">Adding the feathers</p>
+                <div class="process-slider">
+                    <div class="process-step fade-in">
+                        <img src="images/eagle-process-1.JPG" alt="Making the skeleton" class="process-image">
+                        <p class="process-label">Making the skeleton</p>
+                    </div>
+                    
+                    <div class="process-step fade-in">
+                        <img src="images/eagle-process-2.JPG" alt="Adding the feathers" class="process-image">
+                        <p class="process-label">Adding the feathers</p>
+                    </div>
+                    
+                    <div class="process-step fade-in">
+                        <img src="images/eagle-process-4.JPG" alt="Starting the wings" class="process-image">
+                        <p class="process-label">Starting the wings</p>
+                    </div>
+                    
+                    <div class="process-step fade-in">
+                        <img src="images/eagle-process-5.JPG" alt="Forming the beak" class="process-image">
+                        <p class="process-label">Forming the beak</p>
+                    </div>
+                    
+                    <div class="process-step fade-in">
+                        <img src="images/branch-process-1.JPG" alt="Making the tree branch" class="process-image">
+                        <p class="process-label">Making the tree branch</p>
+                    </div>
+                    
+                    <div class="process-step fade-in">
+                        <img src="images/eagle-process-6.JPG" alt="The final product" class="process-image">
+                        <p class="process-label">The final product</p>
+                    </div>
                 </div>
-                
-                <div class="process-step fade-in stagger-3">
-                    <img src="images/eagle-process-4.JPG" alt="Starting the wings" class="process-image">
-                    <p class="process-label">Starting the wings</p>
-                </div>
-                
-                <div class="process-step fade-in stagger-4">
-                    <img src="images/eagle-process-5.JPG" alt="Forming the beak" class="process-image">
-                    <p class="process-label">Forming the beak</p>
-                </div>
-                
-                <div class="process-step fade-in stagger-5">
-                    <img src="images/branch-process-1.JPG" alt="Making the tree branch" class="process-image">
-                    <p class="process-label">Making the tree branch</p>
-                </div>
-                
-                <div class="process-step fade-in stagger-6">
-                    <img src="images/eagle-process-6.JPG" alt="The final product" class="process-image">
-                    <p class="process-label">The final product</p>
-                </div>
+
+                <button class="slider-nav next">
+                    <span class="arrow">&#8250;</span>
+                </button>
             </div>
         </section>
     </div>
@@ -1129,6 +1183,29 @@
                     el.classList.add('visible');
                 });
             }, 300);
+        });
+
+        // Process slider navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            const processSlider = document.querySelector('.process-slider');
+            const prevButton = document.querySelector('.slider-nav.prev');
+            const nextButton = document.querySelector('.slider-nav.next');
+
+            function scrollSlider(direction) {
+                const step = processSlider.offsetWidth;
+                const currentScroll = processSlider.scrollLeft;
+                const targetScroll = direction === 'next' 
+                    ? currentScroll + step 
+                    : currentScroll - step;
+                
+                processSlider.scrollTo({
+                    left: targetScroll,
+                    behavior: 'smooth'
+                });
+            }
+
+            prevButton.addEventListener('click', () => scrollSlider('prev'));
+            nextButton.addEventListener('click', () => scrollSlider('next'));
         });
     </script>
 </body>
