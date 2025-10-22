@@ -214,7 +214,8 @@
 
         .project-image img {
             width: 100%;
-            height: auto;
+            height: 100%;
+            object-fit: cover;
             display: block;
         }
 
@@ -305,6 +306,100 @@
             letter-spacing: 0.5px;
         }
 
+        /* Lightbox / Modal */
+        .lightbox-overlay {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(6px);
+            z-index: 2000;
+            padding: 40px;
+        }
+
+        .lightbox-overlay.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            max-width: 80vw;
+            max-height: 80vh;
+            border-radius: 8px;
+            overflow: visible;
+            background: #111;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        .lightbox-content img {
+            max-width: 100%;
+            max-height: calc(80vh - 100px);
+            object-fit: contain;
+            display: block;
+            border-radius: 4px;
+        }
+
+        .lightbox-caption {
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+            font-size: 1.1rem;
+            max-width: 80%;
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 24px;
+            transition: background-color 0.3s ease;
+            z-index: 2;
+        }
+
+        .lightbox-nav:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .lightbox-nav.prev {
+            left: -70px;
+        }
+
+        .lightbox-nav.next {
+            right: -70px;
+        }
+
+        /* Zoom animation */
+        .lightbox-content {
+            transform: scale(0.95);
+            transition: transform 260ms cubic-bezier(.2,.9,.3,1);
+        }
+
+        .lightbox-overlay.active .lightbox-content {
+            transform: scale(1);
+        }
+
+        /* When image is loaded, slightly zoom the image for pop effect */
+        .lightbox-overlay.visible-img .lightbox-content img {
+            transform: scale(1.04);
+            transition: transform 260ms cubic-bezier(.2,.9,.3,1);
+        }
+
         /* Bio Section */
         .bio-section {
             min-height: 100vh;
@@ -358,7 +453,8 @@
 
         .bio-image img {
             width: 100%;
-            height: auto;
+            height: 350px;
+            object-fit: cover;
             display: block;
         }
 
@@ -391,7 +487,7 @@
         }
 
         .portfolio-item {
-            background-color: #e5e5e5;
+            background-color: transparent;
             border-radius: 8px;
             overflow: hidden;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -408,7 +504,7 @@
         .portfolio-item img {
             width: 100%;
             height: 250px;
-            object-fit: cover;
+            object-fit: cover; /* fill the frame */
             transition: transform 0.3s ease;
         }
 
@@ -432,7 +528,7 @@
         }
 
         .portfolio-item-large {
-            background-color: #e5e5e5;
+            background-color: transparent;
             border-radius: 8px;
             overflow: hidden;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -448,7 +544,7 @@
 
         .portfolio-item-large img {
             width: 100%;
-            height: 350px;
+            height: 500px;
             object-fit: cover;
             transition: transform 0.3s ease;
         }
@@ -479,7 +575,7 @@
             max-width: 1200px;
             height: 600px;
             margin: 0 auto;
-            background-image: url('images/kansas-front.jpg');
+            background-image: url('images/Kansas-front.JPG');
             background-size: contain;
             background-position: center;
             background-repeat: no-repeat;
@@ -824,7 +920,7 @@
         <section class="about-section" id="about-home">
             <div class="about-content fade-in">
                 <p class="about-text">
-                    Matthew Farmer is an aspiring artist who specializes in recycled metal sculptures.
+                    Matthew Farmer is an artist who specializes in recycled metal sculptures.
                 </p>
             </div>
         </section>
@@ -886,7 +982,11 @@
                     </div>
                     
                     <div class="process-step fade-in">
-                        <img src="images/eagle-process-6.JPG" alt="The final product" class="process-image">
+                        <img src="images/eagle-process-6.JPG" alt="Finished Eagle" class="process-image">
+                        <p class="process-label">The final product</p>
+                    </div>
+                     <div class="process-step fade-in">
+                        <img src="images/eagle-left.JPG" alt="The final product" class="process-image">
                         <p class="process-label">The final product</p>
                     </div>
                 </div>
@@ -936,6 +1036,21 @@
         <section class="portfolio-section">
             <h1 class="bio-title fade-in">Portfolio</h1>
             
+            <div class="portfolio-row-large">
+                <div class="portfolio-item-large fade-in stagger-1">
+                    <img src="images/duck-side-3.JPG" alt="Duck sculpture made from spoons">
+                    <div class="portfolio-item-caption">
+                        Duck sculpture made from spoons
+                    </div>
+                </div>
+                <div class="portfolio-item-large fade-in stagger-2">
+                    <img src="images/eagle-right.JPG" alt="Bald eagle made from silverware">
+                    <div class="portfolio-item-caption">
+                        Bald eagle made from silverware. Tree branch stand made from knife handles and a brake rotor
+                    </div>
+                </div>
+            </div>
+
             <div class="portfolio-grid">
                 <div class="portfolio-item fade-in stagger-2">
                     <img src="images/boat.JPG" alt="Fishing boat made from bolts, nails, and formed sheet metal">
@@ -974,30 +1089,15 @@
                     </div>
                 </div>
                 <div class="portfolio-item fade-in stagger-2">
-                    <img src="images/dog.JPG" alt="Dog and fire hydrant made from bolts and nails">
-                    <div class="portfolio-item-caption">
-                        Dog and fire hydrant made from bolts and nails
-                    </div>
-                </div>
-            </div>
-
-            <div class="portfolio-row-large">
-                <div class="portfolio-item-large fade-in stagger-1">
                     <img src="images/pigs-family-front.JPG" alt="Family of pigs made from bolts">
                     <div class="portfolio-item-caption">
                         Family of pigs made from bolts. Brothers and father are wearing ties, and mother and daughter are wearing a dress
                     </div>
                 </div>
-                <div class="portfolio-item fade-in stagger-1">
-                    <img src="images/duck-side-3.JPG" alt="Duck sculpture made from spoons">
+                <div class="portfolio-item fade-in stagger-3">
+                    <img src="images/dog.JPG" alt="Dog and fire hydrant made from bolts and nails">
                     <div class="portfolio-item-caption">
-                        Duck sculpture made from spoons
-                    </div>
-                </div>
-                <div class="portfolio-item-large fade-in stagger-2">
-                    <img src="images/eagle-right.JPG" alt="Bald eagle made from silverware">
-                    <div class="portfolio-item-caption">
-                        Bald eagle made from silverware. Tree branch stand made from knife handles and a brake rotor
+                        Dog and fire hydrant made from bolts and nails
                     </div>
                 </div>
             </div>
@@ -1025,7 +1125,7 @@
                 </div>
                 
                 <div class="commissions-image">
-                    <img src="images/Longhorn-front.JPG" alt="Custom Texas Longhorns Sculpture Example" style="width:100%; border-radius:8px; box-shadow: 0 15px 35px rgba(0,0,0,0.5);">
+                    <img src="images/Longhorn-front.JPG" alt="Texas Longhorns' logo with wooden stand" style="width:100%; border-radius:8px; box-shadow: 0 15px 35px rgba(0,0,0,0.5);">
                 </div>
             </div>
 
@@ -1085,7 +1185,7 @@
                 
                 <div class="footer-column">
                     <h3>Contact</h3>
-                    <a href="matthewdavisfarmer@gmail.com">Email</a>
+                    <a href="mailto:matthewdavisfarmer@gmail.com?subject=MFM Sculptures Inquiry">Email</a>
                 </div>
             </div>
         </div>
@@ -1178,9 +1278,28 @@
                 alert('Please enter a valid email address.');
                 return;
             }
+
+            // Format the email body with the form data
+            const emailBody = `New Commission Request:
             
-            alert('Thank you for your commission request! I will get back to you within 24 hours.');
-            this.reset();
+Name: ${firstName}
+Email: ${email}
+Budget: ${budget}
+
+Project Description:
+${description}`;
+
+            // Encode the subject and body for the mailto link
+            const mailtoLink = `mailto:matthewdavisfarmer@gmail.com?cc=${encodeURIComponent(email)}&subject=${encodeURIComponent('New Commission Request - MFM Sculptures')}&body=${encodeURIComponent(emailBody)}`;
+            
+            // Open the email client
+            window.location.href = mailtoLink;
+            
+            // Show confirmation and reset form
+            setTimeout(() => {
+                alert('Thank you for your commission request! Your email client should have opened with the details. I will get back to you within 24 hours.');
+                this.reset();
+            }, 100);
         });
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -1192,6 +1311,111 @@
                 });
             }, 300);
         });
+
+        // Lightbox wiring
+        (function() {
+            // Create lightbox element
+            const lightbox = document.createElement('div');
+            lightbox.className = 'lightbox-overlay';
+            lightbox.innerHTML = `
+                <div class="lightbox-content">
+                    <button class="lightbox-nav prev">‹</button>
+                    <button class="lightbox-nav next">›</button>
+                    <img src="" alt="Enlarged image">
+                    <div class="lightbox-caption"></div>
+                </div>
+            `;
+            document.body.appendChild(lightbox);
+
+            const lightboxImg = lightbox.querySelector('img');
+            const lightboxCaption = lightbox.querySelector('.lightbox-caption');
+            const prevButton = lightbox.querySelector('.lightbox-nav.prev');
+            const nextButton = lightbox.querySelector('.lightbox-nav.next');
+            let currentGalleryImages = [];
+            let currentIndex = 0;
+
+            function openLightbox(img) {
+                // Get all images in the same gallery
+                const selector = img.closest('.portfolio-grid, .portfolio-row-large, .process-slider') 
+                    ? img.closest('.portfolio-grid, .portfolio-row-large, .process-slider').querySelectorAll('img')
+                    : [img];
+                currentGalleryImages = Array.from(selector);
+                currentIndex = currentGalleryImages.indexOf(img);
+                
+                updateLightboxContent();
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function updateLightboxContent() {
+                const img = currentGalleryImages[currentIndex];
+                lightboxImg.src = '';
+                lightboxImg.alt = img.alt || '';
+                lightboxCaption.textContent = img.alt || '';
+
+                // Show/hide navigation based on position
+                prevButton.style.display = currentIndex > 0 ? 'flex' : 'none';
+                nextButton.style.display = currentIndex < currentGalleryImages.length - 1 ? 'flex' : 'none';
+
+                // Load image and trigger animation
+                lightboxImg.onload = () => {
+                    setTimeout(() => {
+                        lightbox.classList.add('visible-img');
+                    }, 30);
+                    lightboxImg.onload = null;
+                };
+                lightboxImg.src = img.src;
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove('visible-img');
+                setTimeout(() => {
+                    lightbox.classList.remove('active');
+                    lightboxImg.src = '';
+                    document.body.style.overflow = '';
+                }, 220);
+            }
+
+            function navigate(direction) {
+                lightbox.classList.remove('visible-img');
+                setTimeout(() => {
+                    currentIndex = direction === 'next' 
+                        ? Math.min(currentIndex + 1, currentGalleryImages.length - 1)
+                        : Math.max(currentIndex - 1, 0);
+                    updateLightboxContent();
+                }, 200);
+            }
+
+            // Click handlers for images
+            const selectors = '.portfolio-item img, .project-image img, .process-image, .portfolio-item-large img, .commissions-image img';
+            document.querySelectorAll(selectors).forEach(img => {
+                img.style.cursor = 'zoom-in';
+                img.addEventListener('click', (e) => {
+                    openLightbox(img);
+                });
+            });
+
+            // Navigation handlers
+            prevButton.addEventListener('click', () => navigate('prev'));
+            nextButton.addEventListener('click', () => navigate('next'));
+
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (!lightbox.classList.contains('active')) return;
+                if (e.key === 'ArrowLeft' && currentIndex > 0) navigate('prev');
+                if (e.key === 'ArrowRight' && currentIndex < currentGalleryImages.length - 1) navigate('next');
+            });
+
+            // Close on overlay click (not image) or ESC
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closeLightbox();
+            });
+        })();
 
         // Process slider navigation
         document.addEventListener('DOMContentLoaded', function() {
