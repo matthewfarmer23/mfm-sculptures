@@ -95,7 +95,7 @@
 
         /* Hero Section */
         .hero-section {
-            height: 85vh; /* reduce hero height so content below moves up */
+            height: 72vh; /* tightened so arrow sits closer to next section */
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -108,7 +108,7 @@
             font-size: clamp(2.5rem, 8vw, 6rem);
             font-weight: normal;
             letter-spacing: 2px;
-            margin-bottom: 8px; /* less space between title and arrow */
+            margin-bottom: 2px; /* tighter gap between title and arrow */
             line-height: 1.1;
             position: relative;
             display: inline-block;
@@ -141,7 +141,7 @@
 
         .scroll-indicator {
             position: absolute;
-            bottom: 20px; /* move arrow closer to the bottom of the hero */
+            bottom: 6px; /* bring arrow closer to title and section below */
             left: 50%;
             transform: translateX(-50%);
             display: flex;
@@ -172,11 +172,11 @@
 
         /* About Section */
         .about-section {
-            min-height: 100vh;
+            min-height: 60vh; /* slightly shorter */
             display: flex;
-            align-items: center;
+            align-items: flex-start; /* let content start closer to top */
             justify-content: center;
-            padding: 100px 40px;
+            padding: 30px 40px 30px; /* reduce bottom padding to tighten gap to next section */
             text-align: center;
         }
 
@@ -193,8 +193,8 @@
 
         /* Recent Project Section */
         .recent-project-section {
-            min-height: 100vh;
-            padding: 100px 40px;
+            min-height: 85vh; /* reduce overall section height */
+            padding: 40px 40px 80px; /* much smaller top padding so it sits closer to the about section */
         }
 
         .section-title {
