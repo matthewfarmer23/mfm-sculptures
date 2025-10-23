@@ -95,7 +95,7 @@
 
         /* Hero Section */
         .hero-section {
-            height: 100vh;
+            height: 85vh; /* reduce hero height so content below moves up */
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -108,13 +108,40 @@
             font-size: clamp(2.5rem, 8vw, 6rem);
             font-weight: normal;
             letter-spacing: 2px;
-            margin-bottom: 20px;
+            margin-bottom: 8px; /* less space between title and arrow */
             line-height: 1.1;
+            position: relative;
+            display: inline-block;
+            padding: 0.25em 0.8em; /* frame for the title image */
+            border-radius: 8px;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        /* image behind the title text, cropped to the title frame */
+        .hero-title::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: url('images/ranch.JPG');
+            background-size: cover; /* crop to fill the frame */
+            background-position: center;
+            filter: contrast(0.95) saturate(0.9);
+            transform: scale(1.04);
+            z-index: -2;
+        }
+        /* subtle dark overlay so text remains readable */
+        .hero-title::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.45);
+            z-index: -1;
         }
 
         .scroll-indicator {
             position: absolute;
-            bottom: 50px;
+            bottom: 20px; /* move arrow closer to the bottom of the hero */
             left: 50%;
             transform: translateX(-50%);
             display: flex;
@@ -126,9 +153,9 @@
         }
 
         .scroll-arrow {
-            font-size: 48px;
-            margin-top: 10px;
-            transform: scaleY(2);
+            font-size: 44px; /* slightly smaller so it sits closer to the title */
+            margin-top: 6px;
+            transform: scaleY(1.6);
         }
 
         @keyframes bounce {
@@ -1439,6 +1466,14 @@ ${description}`;
             prevButton.addEventListener('click', () => scrollSlider('prev'));
             nextButton.addEventListener('click', () => scrollSlider('next'));
         });
+    </script>
+
+    <!-- Start a simple static server on port 8080 -->
+    <script>
+        // This script block is for documentation purposes only.
+        // To start the server, run the following command in your terminal:
+        // python3 -m http.server 8080
+        // Then, open your browser and go to http://localhost:8080
     </script>
 </body>
 </html>
