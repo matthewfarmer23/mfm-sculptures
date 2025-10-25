@@ -172,7 +172,7 @@
 
         /* About Section */
         .about-section {
-            min-height: 60vh; /* slightly shorter */
+            min-height: 20vh; /* slightly shorter */
             display: flex;
             align-items: flex-start; /* let content start closer to top */
             justify-content: center;
@@ -446,7 +446,7 @@
         .bio-text {
             max-width: 1000px;
             margin: 0 auto 80px auto;
-            text-align: center;
+            text-align: left;
         }
 
         .main-bio {
@@ -597,17 +597,19 @@
             margin-bottom: 80px;
         }
 
+        /* hero image: use cover and remove box-shadow so there's no "weird box" behind it */
         .commissions-hero-image {
             width: 100%;
             max-width: 1200px;
-            height: 600px;
+            height: min(60vh, 600px);
             margin: 0 auto;
             background-image: url('images/Kansas-front.JPG');
-            background-size: contain;
+            background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             border-radius: 8px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            box-shadow: none;
+            overflow: hidden;
         }
 
         .commissions-info {
@@ -951,7 +953,7 @@
                 </p>
             </div>
         </section>
-
+        
         <!-- Recent Project Section -->
         <section class="recent-project-section">
             <h2 class="section-title fade-in">My Most Recent Project</h2>
@@ -959,16 +961,16 @@
             
             <div class="project-gallery">
                 <div class="project-image fade-in stagger-1">
-                    <img src="images/eagle-front.JPG" alt="Bald Eagle Sculpture - Full View">
+                    <img src="images/eagle-front.JPG" alt="Bald Eagle Sculpture - Front View">
                 </div>
                 <div class="project-image fade-in stagger-2">
-                    <img src="images/eagle-right.JPG" alt="Bald Eagle Sculpture - Side View">
+                    <img src="images/eagle-right.JPG" alt="Bald Eagle Sculpture - Right View">
                 </div>
                 <div class="project-image fade-in stagger-3">
-                    <img src="images/eagle-left.JPG" alt="Bald Eagle Sculpture - Detail View">
+                    <img src="images/eagle-left.JPG" alt="Bald Eagle Sculpture - Left View">
                 </div>
                 <div class="project-image fade-in stagger-4">
-                    <img src="images/eagle-back.JPG" alt="Bald Eagle Sculpture - Wings Spread">
+                    <img src="images/eagle-back.JPG" alt="Bald Eagle Sculpture - Back View">
                 </div>
             </div>
         </section>
@@ -1010,7 +1012,7 @@
                     
                     <div class="process-step fade-in">
                         <img src="images/eagle-process-6.JPG" alt="Finished Eagle" class="process-image">
-                        <p class="process-label">The final product</p>
+                        <p class="process-label">The finished eagle</p>
                     </div>
                      <div class="process-step fade-in">
                         <img src="images/eagle-left.JPG" alt="The final product" class="process-image">
@@ -1031,7 +1033,7 @@
             <h1 class="bio-title fade-in">About</h1>
             
             <div class="bio-text fade-in">
-                <p class="main-bio">I began making metal sculptures in my senior year of high school. I had the opportunity to create a senior project with the only requirement being that I learn something new. I decided to learn how to weld, and I found that it was very rewarding. After getting the basics down, I made a heavy-duty bumper for my car, and as an Oregon Duck, I had to make one. I fell in love with bringing my ideas to life, and my journey began.</p>
+                <p class="main-bio">I began making metal sculptures in my senior year of high school. I had the opportunity to create a senior project with the intent being that I learn something that interested me. I decided to learn how to weld, and after getting the basics down, I made a heavy-duty bumper for my car, and as an Oregon Duck, I had to make one. I really enjoyed bringing my ideas to life, so I continued making new pieces.</p>
             </div>
             
             <div class="bio-gallery">
@@ -1219,7 +1221,7 @@
     </footer>
 
     <script>
-        function showSection(sectionName) {
+        function showSection(sectionName, scrollTarget) {
             const sections = document.querySelectorAll('.section');
             sections.forEach(section => {
                 section.classList.remove('active');
@@ -1229,10 +1231,16 @@
             if (targetSection) {
                 targetSection.classList.add('active');
                 
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
+                // scroll behavior: if scrollTarget === 'middle' center the section in the viewport,
+                // otherwise scroll to top.
+                if (scrollTarget === 'middle') {
+                    // ensure layout updates before scrolling
+                    requestAnimationFrame(() => {
+                        targetSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    });
+                } else {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
                 
                 updateActiveNav(sectionName);
                 
